@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A beautiful live weather dashboard with current conditions and a seven-day forecast.">
+  <title>Atmos — Weather Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Atmos home">
+        <span class="brand-mark">A</span>
+        <span>atmos<span class="brand-dot">.</span></span>
+      </a>
+      <div class="topbar-right">
+        <span class="live-indicator"><span></span> LIVE WEATHER</span>
+        <button class="icon-button" id="refreshBtn" aria-label="Refresh weather" title="Refresh weather">↻</button>
+      </div>
+    </header>
+
+    <section class="intro">
+      <div>
+        <p class="eyebrow">YOUR PERSONAL WEATHER SPACE</p>
+        <h1>Weather, at a <span>glance.</span></h1>
+        <p class="intro-copy">A little more clarity for whatever the day brings.</p>
+      </div>
+    </section>
+
+    <form class="search-form" id="searchForm">
+      <span class="search-icon" aria-hidden="true">⌕</span>
+      <label class="sr-only" for="cityInput">Search city</label>
+      <input id="cityInput" type="search" placeholder="Search a city — e.g. Chennai, London..." autocomplete="off" required>
+      <button class="location-button" type="button" id="locationBtn" title="Use my location" aria-label="Use my location">◎ <span>My location</span></button>
+      <button class="search-button" type="submit">Explore <span>↗</span></button>
+    </form>
+
+    <p class="status-message" id="statusMessage" role="status" aria-live="polite">Loading weather...</p>
+
+    <section class="dashboard" id="dashboard" aria-live="off">
+      <article class="hero-card">
+        <div class="hero-top">
+          <div>
+            <p class="eyebrow light-eyebrow">CURRENT WEATHER</p>
+            <h2 id="cityName">Coimbatore</h2>
+            <p class="location-subtitle" id="locationSubtitle">Tamil Nadu, India</p>
+            <p class="local-time" id="localTime">Local time</p>
+          </div>
+          <div class="weather-illustration" id="heroIcon" aria-hidden="true">☀️</div>
+        </div>
+        <div class="temperature-row">
+          <div class="temperature" id="temperature">--<span>°</span></div>
+          <div class="condition-block">
+            <p id="condition">Getting conditions...</p>
+            <p class="feels-like">Feels like <strong id="feelsLike">--°</strong></p>
+          </div>
+        </div>
+        <div class="hero-bottom">
+          <span id="todayDate">Today</span>
+          <span class="weather-pill"><span class="weather-dot"></span><span id="daySummary">Live conditions</span></span>
+        </div>
+      </article>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">THE DETAILS</p>
+            <h2>Today's conditions</h2>
+          </div>
+          <span class="section-note">Updated with live data</span>
+        </div>
+        <div class="metrics-grid">
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-icon humidity-icon">≈</span><span class="metric-label">HUMIDITY</span></div>
+            <p class="metric-value" id="humidity">--<span>%</span></p>
+            <p class="metric-caption" id="humidityCaption">Relative humidity</p>
+          </article>
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-icon wind-icon">↗</span><span class="metric-label">WIND SPEED</span></div>
+            <p class="metric-value" id="wind">--<span> km/h</span></p>
+            <p class="metric-caption" id="windCaption">Current wind</p>
+          </article>
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-icon uv-icon">☼</span><span class="metric-label">UV INDEX</span></div>
+            <p class="metric-value" id="uvIndex">--</p>
+            <p class="metric-caption" id="uvCaption">UV intensity</p>
+          </article>
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-icon visibility-icon">◉</span><span class="metric-label">VISIBILITY</span></div>
+            <p class="metric-value" id="visibility">--<span> km</span></p>
+            <p class="metric-caption">Horizontal visibility</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">COMING UP</p>
+            <h2>Next 24 hours</h2>
+          </div>
+          <span class="section-note">Temperature · °C</span>
+        </div>
+        <div class="hourly-grid" id="hourlyGrid"></div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">PLAN AHEAD</p>
+            <h2>7-day forecast</h2>
+          </div>
+          <span class="section-note">Your week, simplified</span>
+        </div>
+        <div class="forecast-list" id="forecastList"></div>
+      </section>
+
+      <footer class="app-footer">
+        <div class="footer-brand"><span class="brand-mark small-mark">A</span><span>atmos<span class="brand-dot">.</span></span></div>
+        <p>Look up. Step out. Make it a good day.</p>
+        <p class="data-credit">Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></p>
+      </footer>
+    </section>
+    <noscript><p class="error-box">Please enable JavaScript to use this weather dashboard.</p></noscript>
+  </main>
+</body>
+</html>
